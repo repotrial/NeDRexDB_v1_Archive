@@ -31,4 +31,5 @@ FROM neo4j:4.4-enterprise as import-stage
 COPY --from=setup-stage /usr/app/biocypher-out/ /var/lib/neo4j/import/
 COPY docker/create_table.sh docker/import_entrypoint.sh ./
 COPY docker/import.sh import/
+RUN wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
 RUN cat import_entrypoint.sh | cat - /startup/docker-entrypoint.sh > docker-entrypoint.sh && mv docker-entrypoint.sh /startup/ && chmod +x /startup/docker-entrypoint.sh
