@@ -330,8 +330,6 @@ class NeDRexAdapter:
 
         for row in tqdm(self.drugs.collect()):
 
-            print(row)
-
             # normalize id
             _id, _type = _process_id_and_type(
                 row[node_field_type._PRIMARY_ID.value], ontology_class
