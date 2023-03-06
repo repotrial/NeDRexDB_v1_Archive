@@ -6,6 +6,7 @@ from bioregistry import normalize_curie
 from biocypher._logger import logger
 from tqdm import tqdm
 import functools
+from functools import reduce
 
 
 class NeDRexDataset(Enum):
@@ -170,7 +171,7 @@ class NeDRexAdapter:
 
         if not DrugNodeField.DRUG_ID in self.node_fields:
             raise ValueError(
-                "TargetNodeField.TARGET_GENE_ENSG must be provided"
+                "TargetNodeField.DRUG_ID must be provided"
             )
 
         # if not DiseaseNodeField.DISEASE_ACCESSION in self.node_fields:
@@ -217,6 +218,11 @@ class NeDRexAdapter:
         """
         pass
 
+    def process_headers(self, data):
+        headers = data.schema.names
+        new_headers = [header.split(":")[0] if ":" in header else header for header in  headers]
+        return reduce(lambda data, idx: data.withColumnRenamed(headers[idx], new_headers[idx]), range(len(headers)), data)
+
     def load_data(
         self,
         stats: bool = False,
@@ -242,7 +248,8 @@ class NeDRexAdapter:
         # Read in evidence data and target / disease annotations
         drug_path = "data/nedrex_files/drug.csv"
 
-        self.drugs = self.spark.read.csv(drug_path)
+        self.drugs = self.process_headers(self.spark.read.option("header", True).csv(drug_path))
+
 
         # target_path = "data/ot_files/targets"
         # self.target_df = self.spark.read.parquet(target_path)
@@ -322,6 +329,8 @@ class NeDRexAdapter:
         logger.info(f"Generating nodes of {node_field_type}.")
 
         for row in tqdm(self.drugs.collect()):
+
+            print(row)
 
             # normalize id
             _id, _type = _process_id_and_type(
@@ -501,7 +510,6 @@ def _process_id_and_type(inputId: str, _type: Optional[str] = None):
 
     if not inputId:
         return (None, None)
-
     if _type:
 
         _id = normalize_curie(f"{_type}:{inputId}")
@@ -513,10 +521,10 @@ def _process_id_and_type(inputId: str, _type: Optional[str] = None):
 
         _type = inputId.split(".")[0].lower()
 
-        # special case for OTAR TODO
         _id = normalize_curie(inputId, sep=".")
 
-    return (_id, _type)
+        return (_id, _type)
+    return (inputId, None)
 
 
 def _find_licence(source: str) -> str:
