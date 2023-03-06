@@ -1,0 +1,85 @@
+# ---
+# "Named Things"
+# ---
+drug:
+  is_a: Drug
+  represented_as: node
+  preferred_id: drugbank
+  label_in_input: drugbank
+  properties:
+    displayName: str
+
+#disorder:
+#  is_a: Disease
+#  represented_as: node
+#  preferred_id: mondo
+#  label_in_input: primaryDomainID
+#  properties:
+#    displayName: str
+
+#mouse gene:
+#  is_a: gene
+#  represented_as: node
+#  preferred_id: ensembl
+#  label_in_input: mouse gene
+#  properties:
+#    targetInModel: str
+#    targetInModelMgiId: str
+#    targetFromSourceId: str
+#
+## otar has no Bioregistry entry
+#disease:
+#  represented_as: node
+#  preferred_id: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
+#  label_in_input: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
+#  properties:
+#    code: str
+#    name: str
+#    description: str
+#    ontology: str
+#
+#go term:
+#  is_a: biological entity # activity, process, or location
+#  represented_as: node
+#  preferred_id: go
+#  label_in_input: go
+#  properties:
+#    name: str
+#
+#mouse phenotype:
+#  is_a: phenotypic feature
+#  represented_as: node
+#  preferred_id: mp
+#  label_in_input: mp
+#  properties:
+#    modelPhenotypeLabel: str
+#    targetFromSourceId: str
+#    targetInModelEnsemblId: str
+#
+## ---
+## Associations
+## ---
+#
+#gene to disease association:
+#  represented_as: node
+#  preferred_id: [
+#    affected pathway,
+#    somatic mutation,
+#    genetic association,
+#    literature,
+#    animal model,
+#    known drug,
+#    rna expression,
+#  ]
+#  label_in_input: [
+#    affected_pathway,
+#    somatic_mutation,
+#    genetic_association,
+#    literature,
+#    animal_model,
+#    known_drug,
+#    rna_expression,
+#  ]
+#  properties:
+#    literature: str[]
+#    score: double

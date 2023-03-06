@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "otar-biocypher"
+version = "0.1.0"
+description = "BioCypher Open Targets Knowledge Graph adapter"
+authors = ["Sebastian Lobentanzer <sebastian.lobentanzer@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+biocypher = { git = "https://github.com/saezlab/BioCypher.git", branch = "main" }
+# biocypher = {path = "../BioCypher", develop = true}  # for local development
+snakeviz = "^2.1.1"
+pyspark = "^3.3.1"
+pandas = "^1.5.2"
+bioregistry = "0.6.84"
+[tool.poetry.dev-dependencies]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[build-system]
+requires = ["poetry-core=1.5.0"]
+build-backend = "poetry.core.masonry.api"
