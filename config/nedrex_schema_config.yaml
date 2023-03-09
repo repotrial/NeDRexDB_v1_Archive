@@ -8,77 +8,202 @@ drug:
   label_in_input: drugbank
   properties:
     displayName: str
+    allDatasets: str[]
+    casNumber: str
+    description: str
+    domainIds: str[]
+    drugCategories: str[]
+    drugGroups: str[]
+    indication: str
+    iupacName: str
+    primaryDataset: str
+    sequences: str[]
+    synonyms: str[]
+    inchi: str
+    molecularFormula: str
+    smiles: str
 
-#disorder:
-#  is_a: Disease
-#  represented_as: node
-#  preferred_id: mondo
-#  label_in_input: primaryDomainID
-#  properties:
-#    displayName: str
+disorder:
+  is_a: Disease
+  represented_as: node
+  preferred_id: mondo
+  label_in_input: mondo
+  properties:
+    displayName: str
+    domainIds: str[]
+    synonyms: str[]
+    icd10: str[]
+    description: str
 
-#mouse gene:
-#  is_a: gene
-#  represented_as: node
-#  preferred_id: ensembl
-#  label_in_input: mouse gene
-#  properties:
-#    targetInModel: str
-#    targetInModelMgiId: str
-#    targetFromSourceId: str
-#
-## otar has no Bioregistry entry
-#disease:
-#  represented_as: node
-#  preferred_id: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
-#  label_in_input: [mondo, efo, hp, orphanet, otar, oba, ncit, doid, obi, ogms]
-#  properties:
-#    code: str
-#    name: str
-#    description: str
-#    ontology: str
-#
-#go term:
-#  is_a: biological entity # activity, process, or location
-#  represented_as: node
-#  preferred_id: go
-#  label_in_input: go
-#  properties:
-#    name: str
-#
-#mouse phenotype:
-#  is_a: phenotypic feature
-#  represented_as: node
-#  preferred_id: mp
-#  label_in_input: mp
-#  properties:
-#    modelPhenotypeLabel: str
-#    targetFromSourceId: str
-#    targetInModelEnsemblId: str
-#
-## ---
-## Associations
-## ---
-#
-#gene to disease association:
-#  represented_as: node
+gene:
+  is_a: Gene
+  represented_as: node
+  preferred_id: entrez
+  label_in_input: entrez
+  properties:
+    displayName: str
+    domainIds: str[]
+    synonyms: str[]
+    approvedSymbol: str
+    symbols: str[]
+    description: str
+    chromosome: str
+    mapLocation: str
+    geneType: str
+
+protein:
+  is_a: Protein
+  represented_as: node
+  preferred_id: uniprot
+  label_in_input: uniprot
+  properties:
+    domainIds: str
+    sequence: str
+    displayName: str
+    synonyms: str[]
+    comments: str
+    geneName: str
+    taxid: int
+
+pathway:
+  is_a: Pathway
+  represented_as: node
+  preferred_id: reactome
+  label_in_input: reactome
+  properties:
+    displayName: str
+    domainIds: str[]
+    species: str
+
+signature:
+  is_a: NucleicAcidSequenceMotif
+  represented_as: node
+  preferred_id: prosite
+  label_in_input: prosite
+  properties:
+    description: str
+
+
+# ---
+# Associations
+# ---
+drug indicated for disease:
+  is_a: drug indicated for disease
+  represented_as: edge
+  label_in_input: DrugHasIndication
+
+disease is subtype of disease:
+  is_a: disease is subtype of disease
+  represented_as: edge
+  label_in_input: DisorderIsSubtypeOfDisorder
+
+drug contraindicated for disease:
+  is_a: drug contraindicated for disease
+  represented_as: edge
+  label_in_input: DrugHasContraindication
+
+drug has target protein:
+  is_a: drug has target protein
+  represented_as: edge
+  label_in_input: DrugHasTarget
+  properties:
+    actions: str[]
+    databases: str[]
+
+gene associated with disorder:
+  is_a: gene associated with disorder
+  represented_as: edge
+  label_in_input: GeneAssociatedWithDisorder
+  properties:
+    assertedBy: str[]
+    score: double
+
+protein is isoform of protein:
+  is_a: protein is isoform of protein
+  represented_as: edge
+  label_in_input: IsIsoformOf
+
+drug is similar to drug:
+  is_a: drug is similar to drug
+  represented_as: edge
+  label_in_input: MoleculeSimilarityMolecule
+  properties:
+    morganR1: double
+    morganR2: double
+    morganR3: double
+    morganR4: double
+    maccs: double
+
+protein is encoded by gene:
+  is_a: protein is encoded by gene
+  represented_as: edge
+  label_in_input: ProteinEncodedBy
+
+protein has signature:
+  is_a: protein has signature
+  represented_as: edge
+  label_in_input: ProteinHasSignature
+
+protein is in pathway:
+  is_a: protein is in pathway
+  represented_as: edge
+  label_in_input: ProteinInPathway
+
+protein interacts with protein:
+  is_a: protein interacts with protein
+  represented_as: edge
+  label_in_input: ProteinInteractsWithProtein
+  properties:
+    methods: str[]
+    databases: str[]
+    evidenceTypes: str[]
+
+protein is similar to protein:
+  is_a: protein is similar to protein
+  represented_as: edge
+  label_in_input: ProteinSimilarityProtein
+  properties:
+    blast12.query: str
+    blast12.hit: str
+    blast12.bitscore: double
+    blast12.evalue: double
+    blast12.queryStart: int
+    blast12.queryEnd: int
+    blast12.hitStart: int
+    blast12.hitEnd: int
+    blast12.identity: double
+    blast12.mismatches: int
+    blast12.gaps: int
+    blast12.queryCover: double
+    blast12.hitCover: double
+    blast12.type: str
+    blast21.query: str
+    blast21.hit: str
+    blast21.bitscore: double
+    blast21.evalue: double
+    blast21.queryStart: int
+    blast21.queryEnd: int
+    blast21.hitStart: int
+    blast21.hitEnd: int
+    blast21.identity: double
+    blast21.mismatches: int
+    blast21.gaps: int
+    blast21.queryCover: double
+    blast21.hitCover: double
+    blast21.type: str
+
+
+
+
+#drug to disease association:
+#  represented_as: edge
 #  preferred_id: [
-#    affected pathway,
-#    somatic mutation,
-#    genetic association,
-#    literature,
-#    animal model,
-#    known drug,
-#    rna expression,
+#    drugbank,
+#    mondo
 #  ]
 #  label_in_input: [
-#    affected_pathway,
-#    somatic_mutation,
-#    genetic_association,
-#    literature,
-#    animal_model,
-#    known_drug,
-#    rna_expression,
+#    sourceDomainId,
+#    targetDomainId,
 #  ]
 #  properties:
 #    literature: str[]

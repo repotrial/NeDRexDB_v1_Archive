@@ -19,7 +19,14 @@ class NeDRexDataset(Enum):
 
 
 _licences = {
-    "drugbank_drugs": "CC BY-NC 4.0",
+    "drugbank_node": "CC BY-NC 4.0",
+    "mondo_node": "CC BY 4.0",
+    "drugcentral_edge": "CC BY-SA 4.0",
+    "ctd_edge": "NA",
+    "uniprot_node": "CC BY 4.0",
+    "ncbi_node": "NA",
+    "reactome_node": "CC0 1.0 Universal",
+    "mondo_edge": "CC BY 4.0"
 }
 
 
@@ -30,138 +37,194 @@ class DrugNodeField(Enum):
     """
 
     # mandatory fields
-    DRUG_ID = "primaryDomainId"
-    _PRIMARY_ID = DRUG_ID
+    DRUGBANK_ID = "primaryDomainId"
+    _PRIMARY_ID = DRUGBANK_ID
+    SOURCE = "drugbank"
+    VERSION = "v5.1"
 
     # optional fields
     DRUG_NAME = "displayName"
+    ALL_DATASETS = "allDatasets"
+    CAS_NUMBER = "casNumber"
+    DESCRIPTION = "description"
+    DOMAIN_IDS = "domainIds"
+    DRUG_CATEGORIES = "drugCategories"
+    DRUG_GROUPS = "drugGroups"
+    INDICATION = "indication"
+    IUPAC_NAME = "iupacName"
+    PRIMARY_DATASET = "primaryDataset"
+    SEQUENCES = "sequences"
+    SYNONYMS = "synonyms"
+    INCI = "inchi"
+    MOLECULAR_FORMULA = "molecularFormula"
+    SMILES = "smiles"
 
 
-# class DiseaseNodeField(Enum):
-#     """
-#     Enum of all the fields in the disease dataset. Values are the spellings used
-#     in the Open Targets parquet files.
-#     """
-#
-#     # mandatory fields
-#     DISEASE_ACCESSION = "id"
-#     _PRIMARY_ID = DISEASE_ACCESSION
+
+class DiseaseNodeField(Enum):
+    """
+    Enum of all the fields in the disease dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    # mandatory fields
+    MONDO_ID = "primaryDomainId"
+    _PRIMARY_ID = MONDO_ID
+    SOURCE = "mondo"
+    VERSION = "release 2022-03-01"
+
+#     # optional fields
+    NAME = "displayName"
+    DomainIDs = "domainIds"
+    SYNONYMS = "synonyms"
+    ICD10 = "icd10"
+    DESCRIPTION = "description"
+
+
+class GeneNodeField(Enum):
+    """
+    Enum of all the fields in the disease dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    # mandatory fields
+    ENTREZ_ID = "primaryDomainId"
+    _PRIMARY_ID = ENTREZ_ID
+    SOURCE = "ncbi"
+    VERSION = "NA"
 #
 #     # optional fields
-#     DISEASE_CODE = "code"
-#     DISEASE_DATABASE_XREFS = "dbXRefs"
-#     DISEASE_DESCRIPTION = "description"
-#     DISEASE_NAME = "name"
-#     DISEASE_DIRECT_LOCATION_IDS = "directLocationIds"
-#     DISEASE_OBSOLETE_TERMS = "obsoleteTerms"
-#     DISEASE_PARENTS = "parents"
-#     DISEASE_SKO = "sko"
-#     DISEASE_SYNONYMS = "synonyms"
-#     DISEASE_ANCESTORS = "ancestors"
-#     DISEASE_DESCENDANTS = "descendants"
-#     DISEASE_CHILDREN = "children"
-#     DISEASE_THERAPEUTIC_AREAS = "therapeuticAreas"
-#     DISEASE_INDIRECT_LOCATION_IDS = "indirectLocationIds"
-#     DISEASE_ONTOLOGY = "ontology"
+    NAME = "displayName"
+    DOMAIN_IDS = "domainIds"
+    SYNONYMS = "synonyms"
+    APPROVED_SYMBOL = "approvedSymbol"
+    SYMBOLS = "symbols"
+    DESCRIPTION = "description"
+    CHROMOSOME = "chromosome"
+    MAP_LOCATION = "mapLocation"
+    GENE_TYPE = "geneType"
 
 
-# class GeneOntologyNodeField(Enum):
-#     """
-#     Enum of all the fields in the gene ontology dataset. Values are the
-#     spellings used in the Open Targets parquet files.
-#     """
-#
-#     # mandatory fields
-#     GENE_ONTOLOGY_ACCESSION = "id"
-#     _PRIMARY_ID = GENE_ONTOLOGY_ACCESSION
-#
-#     # optional fields
-#     GENE_ONTOLOGY_NAME = "name"
-#
-#
-# class MousePhenotypeNodeField(Enum):
-#     """
-#     Enum of all the fields in the mouse phenotype dataset. Values are the
-#     spellings used in the Open Targets parquet files.
-#     """
-#
-#     # mandatory fields
-#     MOUSE_PHENOTYPE_ACCESSION = "modelPhenotypeId"
-#     _PRIMARY_ID = MOUSE_PHENOTYPE_ACCESSION
+class ProteinNodeField(Enum):
+    """
+    Enum of all the fields in the disease dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    # mandatory fields
+    UNIPROT_ID = "primaryDomainId"
+    _PRIMARY_ID = UNIPROT_ID
+    SOURCE = "uniprot"
+    VERSION = "release 2022_01"
 #
 #     # optional fields
-#     MOUSE_PHENOTYPE_LABEL = "modelPhenotypeLabel"
+    NAME = "displayName"
+    SEQUENCE = "sequence"
+    DISPLAY_NAME = "displayName"
+    SYNONYMS = "synonyms"
+    COMMENTS = "comments"
+    GENE_NAME = "geneName"
+    TAXID = "taxid"
+
+class PathwayNodeField(Enum):
+    """
+    Enum of all the fields in the disease dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    # mandatory fields
+    KEGG_ID = "primaryDomainId"
+    _PRIMARY_ID = KEGG_ID
+    SOURCE = "reactome"
+    VERSION = "v79"
 #
+#     # optional fields
+    NAME = "displayName"
+    DOMAIN_IDS = "domainIds"
+    SPECIES = "species"
+
+class SignatureNodeField(Enum):
+    """
+    Enum of all the fields in the disease dataset. Values are the spellings used
+    in the Open Targets parquet files.
+    """
+
+    # mandatory fields
+    PROSITE_ID = "primaryDomainId"
+    _PRIMARY_ID = PROSITE_ID
+    SOURCE = "uniprot"
+    VERSION = "release 2022_01"
 #
-# class MouseTargetNodeField(Enum):
-#     """
-#     Enum of all the fields in the mouse phenotype dataset related to murine
-#     targets of each biological model. Values are the spellings used in the Open
-#     Targets parquet files.
-#     """
+#     # optional fields
+    DESCRIPTION = "description"
+
+
 #
-#     # mandatory fields
-#     MOUSE_TARGET_ENSG = "targetInModelEnsemblId"
-#     _PRIMARY_ID = MOUSE_TARGET_ENSG
-#
-#     # alternative ids
-#     MOUSE_TARGET_SYMBOL = "targetInModel"
-#     MOUSE_TARGET_MGI = "targetInModelMgiId"
-#
-#     # human target ensembl id
-#     HUMAN_TARGET_ENGS = "targetFromSourceId"
-#
-#
-# class MouseModelNodeField(Enum):
-#     """
-#     Enum of all the fields in the mouse phenotype dataset related to the mouse
-#     model. Values are the spellings used in the Open Targets parquet files.
-#     """
-#
-#     # mandatory fields
-#     MOUSE_PHENOTYPE_MODELS = "biologicalModels"
-#     _PRIMARY_ID = MOUSE_PHENOTYPE_MODELS
-#
-#     MOUSE_PHENOTYPE_CLASSES = "modelPhenotypeClasses"
-#
-#
-# class TargetDiseaseEdgeField(Enum):
-#     """
-#     Enum of all the fields in the target-disease dataset. Used to generate the
-#     bulk of relationships in the graph. Values are the spellings used in the
-#     Open Targets parquet files.
-#     """
-#
-#     # mandatory fields
-#     INTERACTION_ACCESSION = "id"
-#
-#     TARGET_GENE_ENSG = "targetId"
-#     _PRIMARY_SOURCE_ID = TARGET_GENE_ENSG
-#
-#     DISEASE_ACCESSION = "diseaseId"
-#     _PRIMARY_TARGET_ID = DISEASE_ACCESSION
-#
-#     TYPE = "datatypeId"
-#     SOURCE = "datasourceId"
-#     LITERATURE = "literature"
-#     SCORE = "score"
+class DrugDiseaseIndicationEdgeField(Enum):
+    # mandatory fields
+    INTERACTION_ACCESSION = "id"
+
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ['drugcentral','ctd']
+    VERSIONS = ['2021-05-10','release March 2022']
+
+
+class DiseaseDiseaseEdgeField(Enum):
+    # mandatory fields
+    INTERACTION_ACCESSION = "id"
+
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ['mondo']
+    VERSIONS = ['release 2022-03-01']
+
+class DrugDiseaseContraindicationEdgeField(Enum):
+    # mandatory fields
+    INTERACTION_ACCESSION = "id"
+
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ['drugcentral','ctd']
+    VERSIONS = ['2021-05-10','release March 2022']
+
+class DrugTargetEdgeField(Enum):
+    # mandatory fields
+    INTERACTION_ACCESSION = "id"
+
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ['drugcentral','ctd']
+    VERSIONS = ['2021-05-10','release March 2022']
+
 
 
 class NeDRexAdapter:
     def __init__(
-        self,
-        datasets: list[Enum] = None,
-        node_fields: list[Enum] = None,
-        edge_fields: list = None,
-        test_mode: bool = False,
+            self,
+            datasets: list[Enum] = None,
+            node_fields: list[Enum] = None,
+            edge_fields: list = None,
     ):
-        self.datasets = datasets
         self.node_fields = node_fields
         self.edge_fields = edge_fields
-        self.test_mode = test_mode
 
-        if not self.datasets:
-            raise ValueError("datasets must be provided")
 
         if not self.node_fields:
             raise ValueError("node_fields must be provided")
@@ -169,9 +232,9 @@ class NeDRexAdapter:
         # if not self.edge_fields:
         #     raise ValueError("edge_fields must be provided")
 
-        if not DrugNodeField.DRUG_ID in self.node_fields:
+        if not DrugNodeField._PRIMARY_ID in self.node_fields:
             raise ValueError(
-                "TargetNodeField.DRUG_ID must be provided"
+                "TargetNodeField._PRIMARY_ID must be provided"
             )
 
         # if not DiseaseNodeField.DISEASE_ACCESSION in self.node_fields:
@@ -179,11 +242,6 @@ class NeDRexAdapter:
         #         "DiseaseNodeField.DISEASE_ACCESSION must be provided"
         #     )
 
-        if self.test_mode:
-            logger.warning(
-                "Open Targets adapter: Test mode is enabled. "
-                "Only processing 100 rows."
-            )
 
         logger.info("Creating Spark session.")
 
@@ -220,14 +278,15 @@ class NeDRexAdapter:
 
     def process_headers(self, data):
         headers = data.schema.names
-        new_headers = [header.split(":")[0] if ":" in header else header for header in  headers]
-        return reduce(lambda data, idx: data.withColumnRenamed(headers[idx], new_headers[idx]), range(len(headers)), data)
+        new_headers = [header.split(":")[0] if ":" in header else header for header in headers]
+        return reduce(lambda data, idx: data.withColumnRenamed(headers[idx], new_headers[idx]), range(len(headers)),
+                      data)
 
     def load_data(
-        self,
-        stats: bool = False,
-        show_nodes: bool = False,
-        show_edges: bool = False,
+            self,
+            stats: bool = False,
+            show_nodes: bool = False,
+            show_edges: bool = False,
     ):
         """
         Load data from disk into Spark DataFrames.
@@ -246,9 +305,41 @@ class NeDRexAdapter:
         logger.info("Loading Open Targets data from disk.")
 
         # Read in evidence data and target / disease annotations
-        drug_path = "data/nedrex_files/drug.csv"
+        prefix = "data/nedrex_files/"
 
-        self.drugs = self.process_headers(self.spark.read.option("header", True).csv(drug_path))
+        def get_path(file):
+            return prefix + file
+
+        self.drugs = self.process_headers(self.spark.read.option("header", True).csv(get_path('drug.csv')))
+        self.disorders = self.process_headers(self.spark.read.option("header", True).csv(get_path('disorder.csv')))
+        self.genes = self.process_headers(self.spark.read.option("header", True).csv(get_path('gene.csv')))
+        self.proteins = self.process_headers(self.spark.read.option("header", True).csv(get_path('protein.csv')))
+        self.pathways = self.process_headers(self.spark.read.option("header", True).csv(get_path('pathway.csv')))
+        self.signatures = self.process_headers(self.spark.read.option("header", True).csv(get_path('signature.csv')))
+
+        self.disorder_is_subtype_of_disorder = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('disorder_is_subtype_of_disorder.csv')))
+        self.drug_has_indication = self.process_headers(self.spark.read.option("header", True).csv(get_path('drug_has_indication.csv')))
+        self.drug_has_contraindication =  self.process_headers(self.spark.read.option("header", True).csv(get_path('drug_has_contraindication.csv')))
+        self.drug_has_target = self.process_headers(self.spark.read.option("header", True).csv(get_path('drug_has_target.csv')))
+
+        self.gene_associated_with_disorder = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('gene_associated_with_disorder.csv')))
+        self.is_isoform_of = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('is_isoform_of.csv')))
+        self.molecule_similarity_molecule = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('molecule_similarity_molecule.csv')))
+        self.protein_encoded_by = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('protein_encoded_by.csv')))
+
+        self.protein_has_signature = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('protein_has_signature.csv')))
+        self.protein_in_pathway = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('protein_in_pathway.csv')))
+        self.protein_interacts_with_protein = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('protein_interacts_with_protein.csv')))
+        self.protein_similarity_protein = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('protein_similarity_protein.csv')))
 
 
         # target_path = "data/ot_files/targets"
@@ -264,9 +355,14 @@ class NeDRexAdapter:
         # self.mp_df = self.spark.read.parquet(mp_path)
 
         if stats:
-
             # print schema
             print(self.drugs.printSchema())
+            print(self.disorders.printSchema())
+            print(self.genes.printSchema())
+            print(self.proteins.printSchema())
+            print(self.signatures.printSchema())
+            print(self.pathways.printSchema())
+
             # print(self.target_df.printSchema())
             # print(self.disease_df.printSchema())
             # print(self.go_df.printSchema())
@@ -275,6 +371,21 @@ class NeDRexAdapter:
             # print number of rows
             print(
                 f"Length of evidence data: {self.drugs.count()} entries"
+            )
+            print(
+                f"Length of evidence data: {self.disorders.count()} entries"
+            )
+            print(
+                f"Length of evidence data: {self.genes.count()} entries"
+            )
+            print(
+                f"Length of evidence data: {self.proteins.count()} entries"
+            )
+            print(
+                f"Length of evidence data: {self.signatures.count()} entries"
+            )
+            print(
+                f"Length of evidence data: {self.pathways.count()} entries"
             )
 
             # print number of rows per datasource
@@ -288,6 +399,12 @@ class NeDRexAdapter:
 
         if show_nodes:
             self.drugs.show(1, 50, True)
+            self.disorders.show(1, 50, True)
+            self.genes.show(1, 50, True)
+            self.proteins.show(1, 50, True)
+            self.pathways.show(1, 50, True)
+            self.signatures.show(1, 50, True)
+
             # self.disease_df.show(1, 50, True)
             # self.go_df.show(1, 50, True)
             # self.mp_df.show(1, 50, True)
@@ -306,10 +423,11 @@ class NeDRexAdapter:
         self.datasources = [x.datasourceId for x in datasources]
         print(self.datasources)
 
-    def _yield_drugs(
-        self,
-        node_field_type: Enum,
-        ontology_class: Optional[str] = None,
+    def _yield_nodes(
+            self,
+            df,
+            node_field_type: Enum,
+            ontology_class: Optional[str] = None,
     ):
         """
         Yield the node type from the dataframe.
@@ -328,24 +446,20 @@ class NeDRexAdapter:
 
         logger.info(f"Generating nodes of {node_field_type}.")
 
-        for row in tqdm(self.drugs.collect()):
+        for row in tqdm(df.collect()):
 
             # normalize id
             _id, _type = _process_id_and_type(
                 row[node_field_type._PRIMARY_ID.value], ontology_class
             )
 
-            # # switch mouse gene type
-            # if node_field_type == MouseTargetNodeField:
-            #     _type = "drug"
-
             if not _id:
                 continue
 
             _props = {}
-            _props["version"] = "22.11"
-            _props["source"] = "NeDRex"
-            _props["licence"] = "https://api.nedrex.net/static/licence"
+            _props["version"] = node_field_type.VERSION.value
+            _props["source"] = node_field_type.SOURCE.value
+            _props["licence"] = _find_licence(node_field_type.SOURCE.value+"_node")
 
             for field in self.node_fields:
 
@@ -363,31 +477,25 @@ class NeDRexAdapter:
         """
 
         # Drugs
-        yield from self._yield_drugs(
-           DrugNodeField
-        )
+        yield from self._yield_nodes(self.drugs, DrugNodeField)
 
         # Diseases
-        # yield from self._yield_node_type(self.disease_df, DiseaseNodeField)
-        #
-        # # Gene Ontology
-        # yield from self._yield_node_type(self.go_df, GeneOntologyNodeField)
-        #
-        # # Mouse Phenotypes
-        # only_mp_df = self.mp_df.select(
-        #     [field.value for field in MousePhenotypeNodeField]
-        # ).dropDuplicates()
-        # yield from self._yield_node_type(only_mp_df, MousePhenotypeNodeField)
-        #
-        # # Mouse Targets
-        # mouse_target_df = self.mp_df.select(
-        #     [field.value for field in MouseTargetNodeField]
-        # ).dropDuplicates()
-        # yield from self._yield_node_type(
-        #     mouse_target_df, MouseTargetNodeField, "ensembl"
-        # )
+        yield from self._yield_nodes(self.disorders, DiseaseNodeField)
 
-    def get_edge_batches(self):
+        # Genes
+        # yield from self._yield_nodes(self.genes, GeneNodeField)
+        #
+        # # Proteins
+        # yield from self._yield_nodes(self.proteins, ProteinNodeField)
+        #
+        # # Pathways
+        # yield from self._yield_nodes(self.pathways, PathwayNodeField)
+        #
+        # # Signatures
+        # yield from self._yield_nodes(self.signatures, SignatureNodeField)
+
+
+    def get_edge_batches(self, df):
         """
         Create a column with partition number in the evidence dataframe and
         return a list of batch numbers.
@@ -395,55 +503,48 @@ class NeDRexAdapter:
 
         logger.info("Generating batches.")
 
-        # select columns of interest
-        self.evidence_df = self.evidence_df.where(
-            self.evidence_df.datasourceId.isin(
-                [field.value for field in self.datasets]
-            )
-        ).select([field.value for field in self.edge_fields])
 
         # add partition number to self.evidence_df as column
-        self.evidence_df = self.evidence_df.withColumn(
+        df = df.withColumn(
             "partition_num", F.spark_partition_id()
         )
-        self.evidence_df.persist()
+        df.persist()
 
         self.batches = [
             int(row.partition_num)
-            for row in self.evidence_df.select("partition_num")
+            for row in df.select("partition_num")
             .distinct()
             .collect()
         ]
 
         logger.info(f"Generated {len(self.batches)} batches.")
 
-        return self.batches
+        return df,self.batches
 
-    def get_edges(self, batch_number: int):
+    def get_edges(self):
         """
         Yield edges from the evidence dataframe per batch.
         """
 
         # Check if self.evidence_df has column partition_num
-        if "partition_num" not in self.evidence_df.columns:
-            raise ValueError(
-                "self.evidence_df does not have column partition_num. "
-                "Please run get_edge_batches() first."
-            )
 
         logger.info("Generating edges.")
 
-        logger.info(
-            f"Processing batch {batch_number+1} of {len(self.batches)}."
-        )
+        dfs = [(self.drug_has_indication, DrugDiseaseIndicationEdgeField),
+               (self.disorder_is_subtype_of_disorder, DiseaseDiseaseEdgeField),
+               (self.drug_has_contraindication, DrugDiseaseContraindicationEdgeField)
+               ]
 
-        yield from self._process_edges(
-            self.evidence_df.where(
-                self.evidence_df.partition_num == batch_number
-            )
-        )
+        for df,edge_field_type in dfs:
+            df,batches = self.get_edge_batches(df)
+            for batch in batches:
+                yield from self._process_edges(
+                    df.where(
+                        df.partition_num == batch
+                    ), edge_field_type
+                )
 
-    def _process_edges(self, batch):
+    def _process_edges(self, batch, edge_field_type:Enum):
         """
         Process one batch of edges.
 
@@ -454,41 +555,31 @@ class NeDRexAdapter:
 
         logger.info(f"Batch size: {batch.count()} edges.")
 
-        if self.test_mode:
-            # limit batch df to 100 rows
-            batch = batch.limit(100)
-
         # yield edges per row of edge_df, skipping null values
         for row in tqdm(batch.collect()):
-
             # collect properties from fields, skipping null values
             properties = {}
-            # for field in self.edge_fields:
-                # skip disease and target ids, relationship id, and datatype id
-                # as they are encoded in the relationship
-                # if field not in [
-                #     TargetDiseaseEdgeField.LITERATURE,
-                #     TargetDiseaseEdgeField.SCORE,
-                #     TargetDiseaseEdgeField.SOURCE,
-                # ]:
-                #     continue
-                #
-                # if field == TargetDiseaseEdgeField.SOURCE:
-                #     properties["source"] = row[field.value]
-                #     properties["licence"] = _find_licence(row[field.value])
-                # elif row[field.value]:
-                #     properties[field.value] = row[field.value]
 
-            properties["version"] = "22.11"
+            properties["version"] = edge_field_type.VERSIONS.value
+            properties["source"] = edge_field_type.SOURCES.value
+            properties['licence'] = [_find_licence(source+"_edge") for source in properties["source"]]
 
-            disease_id, _ = _process_id_and_type(row.diseaseId)
-            # gene_id, _ = _process_id_and_type(row.targetId, "ensembl")
+            for field in self.node_fields:
+
+                if not isinstance(field, edge_field_type):
+                    continue
+
+                if row[field.value]:
+                    properties[field.value] = row[field.value]
+
+            source_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_SOURCE_ID.value])
+            target_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_TARGET_ID.value])
 
             yield (
-                row.id,
-                # gene_id,
-                disease_id,
-                row.datatypeId,
+                0,
+                source_id,
+                target_id,
+                row.type,
                 properties,
             )
 
@@ -509,14 +600,12 @@ def _process_id_and_type(inputId: str, _type: Optional[str] = None):
     if not inputId:
         return (None, None)
     if _type:
-
         _id = normalize_curie(f"{_type}:{inputId}")
 
         return (_id, _type)
 
     # detect delimiter (either _ or :)
     if "." in inputId:
-
         _type = inputId.split(".")[0].lower()
 
         _id = normalize_curie(inputId, sep=".")

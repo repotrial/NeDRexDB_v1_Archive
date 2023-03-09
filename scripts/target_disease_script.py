@@ -5,12 +5,8 @@ sys.path.append("")
 from adapters.target_disease_evidence_adapter import (
     NeDRexAdapter,
     NeDRexDataset,
-    DrugNodeField,
-    # DiseaseNodeField,
-    # TargetDiseaseEdgeField,
-    # GeneOntologyNodeField,
-    # MousePhenotypeNodeField,
-    # MouseTargetNodeField,
+    DrugNodeField, DiseaseNodeField, GeneNodeField, ProteinNodeField, SignatureNodeField, PathwayNodeField,
+    DrugDiseaseIndicationEdgeField
 )
 
 """
@@ -38,23 +34,69 @@ target_disease_datasets = [
     NeDRexDataset.DRUGBANK_DRUG
 ]
 
-drug_node_fields = [
+node_fields = [
     # mandatory fields
-    DrugNodeField.DRUG_ID,
-    DrugNodeField.DRUG_NAME
+    DrugNodeField._PRIMARY_ID,
+    DiseaseNodeField._PRIMARY_ID,
+    GeneNodeField._PRIMARY_ID,
+    ProteinNodeField._PRIMARY_ID,
+    SignatureNodeField._PRIMARY_ID,
+    PathwayNodeField._PRIMARY_ID,
+
+    # optional_fileds
+    DrugNodeField.DRUG_NAME,
+    DrugNodeField.ALL_DATASETS,
+    DrugNodeField.CAS_NUMBER,
+    DrugNodeField.DESCRIPTION,
+    DrugNodeField.DOMAIN_IDS,
+    DrugNodeField.DRUG_CATEGORIES,
+    DrugNodeField.DRUG_GROUPS,
+    DrugNodeField.INDICATION,
+    DrugNodeField.IUPAC_NAME,
+    DrugNodeField.PRIMARY_DATASET,
+    DrugNodeField.SEQUENCES,
+    DrugNodeField.SYNONYMS,
+    DrugNodeField.INCI,
+    DrugNodeField.MOLECULAR_FORMULA,
+    DrugNodeField.SMILES,
+
+    DiseaseNodeField.NAME,
+    DiseaseNodeField.DomainIDs,
+    DiseaseNodeField.SYNONYMS,
+    DiseaseNodeField.ICD10,
+    DiseaseNodeField.DESCRIPTION,
+
+    GeneNodeField.NAME,
+    GeneNodeField.DOMAIN_IDS,
+    GeneNodeField.SYNONYMS,
+    GeneNodeField.APPROVED_SYMBOL,
+    GeneNodeField.SYMBOLS,
+    GeneNodeField.DESCRIPTION,
+    GeneNodeField.CHROMOSOME,
+    GeneNodeField.MAP_LOCATION,
+    GeneNodeField.GENE_TYPE,
+
+    ProteinNodeField.NAME,
+    ProteinNodeField.SEQUENCE,
+    ProteinNodeField.DISPLAY_NAME,
+    ProteinNodeField.SYNONYMS,
+    ProteinNodeField.COMMENTS,
+    ProteinNodeField.GENE_NAME,
+    ProteinNodeField.TAXID,
+
+    PathwayNodeField.NAME,
+    PathwayNodeField.DOMAIN_IDS,
+    PathwayNodeField.SPECIES,
+
+    SignatureNodeField.DESCRIPTION
+]
+edge_fields = [
+    # mandatory fields
+    DrugDiseaseIndicationEdgeField._PRIMARY_TARGET_ID,
+    DrugDiseaseIndicationEdgeField._PRIMARY_SOURCE_ID
+
 ]
 
-target_disease_edge_fields = [
-    # mandatory fields
-    # TargetDiseaseEdgeField.INTERACTION_ACCESSION,
-    # TargetDiseaseEdgeField.TARGET_GENE_ENSG,
-    # TargetDiseaseEdgeField.DISEASE_ACCESSION,
-    # TargetDiseaseEdgeField.TYPE,
-    # TargetDiseaseEdgeField.SOURCE,
-    # # optional fields
-    # TargetDiseaseEdgeField.SCORE,
-    # TargetDiseaseEdgeField.LITERATURE,
-]
 
 
 def main():
@@ -79,10 +121,8 @@ def main():
 
     # Open Targets
     nedrex_adapter = NeDRexAdapter(
-        datasets=target_disease_datasets,
-        node_fields=drug_node_fields,
-        edge_fields=target_disease_edge_fields,
-        test_mode=True,
+        node_fields=node_fields,
+        edge_fields=edge_fields
 
     )
 
@@ -96,9 +136,8 @@ def main():
     driver.write_nodes(nedrex_adapter.get_nodes())
 
     # Write OTAR edges in batches to avoid memory issues
-    # batches = nedrex_adapter.get_edge_batches()
-    # for batch in batches:
-    #     driver.write_edges(nedrex_adapter.get_edges(batch_number=batch))
+
+    driver.write_edges(nedrex_adapter.get_edges())
 
     # Post import functions
     driver.write_import_call()
