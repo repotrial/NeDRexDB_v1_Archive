@@ -1,18 +1,17 @@
-version: '3.4'
+version: '3.3'
 
 services:
-  nedrex_biocypher:
+  neo4j:
     build: .
     container_name: nedrex_biocypher
-    user: '0'
     env_file:
-      - docker_variables.env
-    volumes:
-      - nedrexv1_bc_data:/data
+      - docker-variables.env
     ports:
       - 7474:7474
       - 7687:7687
-volumes:
-  nedrexv1_bc_data:
+    volumes:
+      - nedrexv1_bc_data:/data
  #   restart: always
 
+volumes:
+  nedrexv1_bc_data:

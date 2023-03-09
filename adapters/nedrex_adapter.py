@@ -26,7 +26,14 @@ _licences = {
     "uniprot_node": "CC BY 4.0",
     "ncbi_node": "NA",
     "reactome_node": "CC0 1.0 Universal",
-    "mondo_edge": "CC BY 4.0"
+    "mondo_edge": "CC BY 4.0",
+    "omim_edge": "https://wolken.zbh.uni-hamburg.de/index.php/s/okAEGrEH3WP5F6w/download/NeDRexDB_v1_license.txt",
+    "disgenet_edge": "CC BY-NC-SA 4.0",
+    "uniprot_edge": "CC BY 4.0",
+    "reactome_edge": "CC0 1.0 Universal",
+    "biogrid_edge":"MIT",
+    "iid_edge":"NA",
+    "intact_edge":"NA"
 }
 
 
@@ -60,7 +67,6 @@ class DrugNodeField(Enum):
     SMILES = "smiles"
 
 
-
 class DiseaseNodeField(Enum):
     """
     Enum of all the fields in the disease dataset. Values are the spellings used
@@ -73,7 +79,7 @@ class DiseaseNodeField(Enum):
     SOURCE = "mondo"
     VERSION = "release 2022-03-01"
 
-#     # optional fields
+    #     # optional fields
     NAME = "displayName"
     DomainIDs = "domainIds"
     SYNONYMS = "synonyms"
@@ -92,8 +98,8 @@ class GeneNodeField(Enum):
     _PRIMARY_ID = ENTREZ_ID
     SOURCE = "ncbi"
     VERSION = "NA"
-#
-#     # optional fields
+    #
+    #     # optional fields
     NAME = "displayName"
     DOMAIN_IDS = "domainIds"
     SYNONYMS = "synonyms"
@@ -116,8 +122,8 @@ class ProteinNodeField(Enum):
     _PRIMARY_ID = UNIPROT_ID
     SOURCE = "uniprot"
     VERSION = "release 2022_01"
-#
-#     # optional fields
+    #
+    #     # optional fields
     NAME = "displayName"
     SEQUENCE = "sequence"
     DISPLAY_NAME = "displayName"
@@ -125,6 +131,7 @@ class ProteinNodeField(Enum):
     COMMENTS = "comments"
     GENE_NAME = "geneName"
     TAXID = "taxid"
+
 
 class PathwayNodeField(Enum):
     """
@@ -137,11 +144,12 @@ class PathwayNodeField(Enum):
     _PRIMARY_ID = KEGG_ID
     SOURCE = "reactome"
     VERSION = "v79"
-#
-#     # optional fields
+    #
+    #     # optional fields
     NAME = "displayName"
     DOMAIN_IDS = "domainIds"
     SPECIES = "species"
+
 
 class SignatureNodeField(Enum):
     """
@@ -154,30 +162,26 @@ class SignatureNodeField(Enum):
     _PRIMARY_ID = PROSITE_ID
     SOURCE = "uniprot"
     VERSION = "release 2022_01"
-#
-#     # optional fields
+    #
+    #     # optional fields
     DESCRIPTION = "description"
 
 
 #
 class DrugDiseaseIndicationEdgeField(Enum):
     # mandatory fields
-    INTERACTION_ACCESSION = "id"
-
     TARGET_DISEASE = "targetDomainId"
     _PRIMARY_TARGET_ID = TARGET_DISEASE
 
     SOURCE_DRUG = "sourceDomainId"
     _PRIMARY_SOURCE_ID = SOURCE_DRUG
 
-    SOURCES = ['drugcentral','ctd']
-    VERSIONS = ['2021-05-10','release March 2022']
+    SOURCES = ['drugcentral', 'ctd']
+    VERSIONS = ['2021-05-10', 'release March 2022']
 
 
 class DiseaseDiseaseEdgeField(Enum):
     # mandatory fields
-    INTERACTION_ACCESSION = "id"
-
     TARGET_DISEASE = "targetDomainId"
     _PRIMARY_TARGET_ID = TARGET_DISEASE
 
@@ -187,32 +191,157 @@ class DiseaseDiseaseEdgeField(Enum):
     SOURCES = ['mondo']
     VERSIONS = ['release 2022-03-01']
 
+
 class DrugDiseaseContraindicationEdgeField(Enum):
     # mandatory fields
-    INTERACTION_ACCESSION = "id"
-
     TARGET_DISEASE = "targetDomainId"
     _PRIMARY_TARGET_ID = TARGET_DISEASE
 
     SOURCE_DRUG = "sourceDomainId"
     _PRIMARY_SOURCE_ID = SOURCE_DRUG
 
-    SOURCES = ['drugcentral','ctd']
-    VERSIONS = ['2021-05-10','release March 2022']
+    SOURCES = ['drugcentral', 'ctd']
+    VERSIONS = ['2021-05-10', 'release March 2022']
+
 
 class DrugTargetEdgeField(Enum):
     # mandatory fields
-    INTERACTION_ACCESSION = "id"
-
     TARGET_DISEASE = "targetDomainId"
     _PRIMARY_TARGET_ID = TARGET_DISEASE
 
     SOURCE_DRUG = "sourceDomainId"
     _PRIMARY_SOURCE_ID = SOURCE_DRUG
 
-    SOURCES = ['drugcentral','ctd']
-    VERSIONS = ['2021-05-10','release March 2022']
+    SOURCES = ['drugcentral', 'ctd']
+    VERSIONS = ['2021-05-10', 'release March 2022']
 
+
+class GeneDiseaseAssociationEdgeField(Enum):
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ['omim', 'disgenet']
+    VERSIONS = ['release March 21 2022', 'v7.0']
+
+    ASSERTED_BY = "assertedBy"
+    SCORE = "score"
+
+
+class ProteinIsIsoformOfProteinEdgeField(Enum):
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ['uniprot']
+    VERSIONS = ["release 2022_01"]
+
+
+class DrugSimilarityEdgeField(Enum):
+    TARGET_DISEASE = "memberTwo"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "memberOne"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ["NA"]
+    VERSIONS = ["NA"]
+
+    MORGAN_R1 = "morganR1"
+    MORGAN_R2 = "morganR2"
+    MORGAN_R3 = "morganR3"
+    MORGAN_R4 = "morganR4"
+    MACCS = "maccs"
+
+
+class ProteinEncodedByEdgeField(Enum):
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ["uniprot"]
+    VERSIONS = ["release 2022_01"]
+
+
+class ProteinHasSignatureEdgeField(Enum):
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ["uniprot"]
+    VERSIONS = ["release 2022_01"]
+
+
+class ProteinIsInPathwayEdgeField(Enum):
+    TARGET_DISEASE = "targetDomainId"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "sourceDomainId"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ["reactome"]
+    VERSIONS = ["v79"]
+
+class ProteinProteinInteractionEdgeField(Enum):
+    TARGET_DISEASE = "memberTwo"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "memberOne"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ["biogrid","iid","intact"]
+    VERSIONS = ["v4.4.207", "v2021-05", "v1.0.3"]
+
+    METHODS = 'methods'
+    DATABASES = 'databases'
+    EVIDENCE_TYPES = 'evidenceTypes'
+
+class ProteinProteinSimilarityEdgeField(Enum):
+    TARGET_DISEASE = "memberTwo"
+    _PRIMARY_TARGET_ID = TARGET_DISEASE
+
+    SOURCE_DRUG = "memberOne"
+    _PRIMARY_SOURCE_ID = SOURCE_DRUG
+
+    SOURCES = ["NA"]
+    VERSIONS = ["NA"]
+
+    BLAST12_QUERY = "blast12_query"
+    BLAST12_HIT = "blast12_hit"
+    BLAST12_BITSCORE = "blast12_bitscore"
+    BLAST12_QUERY_E_VALUE = "blast12_evalue"
+    BLAST12_QUERY_START = "blast12_queryStart"
+    BLAST12_QUERY_END = "blast12_queryEnd"
+    BLAST12_HIT_START = "blast12_hitStart"
+    BLAST12_HIT_END = "blast12_hitEnd"
+    BLAST12_IDENTITY = "blast12_identity"
+    BLAST12_MISMATCHES = "blast12_mismatches"
+    BLAST12_GAPS = "blast12_gaps"
+    BLAST12_QUERY_COVER = "blast12_queryCover"
+    BLAST12_HIT_COVER = "blast12_hitCover"
+    BLAST12_TYPE= "blast12_type"
+    BLAST21_QUERY = "blast21_query"
+    BLAST21_HIT = "blast21_hit"
+    BLAST21_BITSCORE = "blast21_bitscore"
+    BLAST21_E_VALUE = "blast21_evalue"
+    BLAST21_QUERY_START = "blast21_queryStart"
+    BLAST21_QUERY_END = "blast21_queryEnd"
+    BLAST21_HIT_START = "blast21_hitStart"
+    BLAST21_HIT_END = "blast21_hitEnd"
+    BLAST21_IDENTITY = "blast21_identity"
+    BLAST21_MISMATCHES = "blast21_mismatches"
+    BLAST21_GAPS = "blast21_gaps"
+    BLAST21_QUERY_COVER = "blast21_queryCover"
+    BLAST21_HIT_COVER = "blast21_hitCover"
+    BLAST21_TYPE = "blast21_type"
 
 
 class NeDRexAdapter:
@@ -225,30 +354,28 @@ class NeDRexAdapter:
         self.node_fields = node_fields
         self.edge_fields = edge_fields
 
-
         if not self.node_fields:
             raise ValueError("node_fields must be provided")
 
-        # if not self.edge_fields:
-        #     raise ValueError("edge_fields must be provided")
+        if not self.edge_fields:
+            raise ValueError("edge_fields must be provided")
 
-        if not DrugNodeField._PRIMARY_ID in self.node_fields:
-            raise ValueError(
-                "TargetNodeField._PRIMARY_ID must be provided"
-            )
+        # if not DrugNodeField._PRIMARY_ID in self.node_fields:
+        #     raise ValueError(
+        #         "DrugNodeField._PRIMARY_ID must be provided"
+        #     )
 
         # if not DiseaseNodeField.DISEASE_ACCESSION in self.node_fields:
         #     raise ValueError(
         #         "DiseaseNodeField.DISEASE_ACCESSION must be provided"
         #     )
 
-
         logger.info("Creating Spark session.")
 
         # Set up Spark context
         conf = (
             SparkConf()
-            .setAppName("otar_biocypher")
+            .setAppName("nedrex_biocypher")
             .setMaster("local")
             .set("spark.driver.memory", "4g")
             .set("spark.executor.memory", "4g")
@@ -258,7 +385,7 @@ class NeDRexAdapter:
         # Create SparkSession
         self.spark = (
             SparkSession.builder.master("local")
-            .appName("otar_biocypher")
+            .appName("nedrex_biocypher")
             .getOrCreate()
         )
 
@@ -279,14 +406,14 @@ class NeDRexAdapter:
     def process_headers(self, data):
         headers = data.schema.names
         new_headers = [header.split(":")[0] if ":" in header else header for header in headers]
+        new_headers = ["_".join(header.split(".")) if '.' in header else header for header in new_headers]
         return reduce(lambda data, idx: data.withColumnRenamed(headers[idx], new_headers[idx]), range(len(headers)),
                       data)
 
     def load_data(
             self,
             stats: bool = False,
-            show_nodes: bool = False,
-            show_edges: bool = False,
+            show_nodes: bool = False
     ):
         """
         Load data from disk into Spark DataFrames.
@@ -319,9 +446,12 @@ class NeDRexAdapter:
 
         self.disorder_is_subtype_of_disorder = self.process_headers(
             self.spark.read.option("header", True).csv(get_path('disorder_is_subtype_of_disorder.csv')))
-        self.drug_has_indication = self.process_headers(self.spark.read.option("header", True).csv(get_path('drug_has_indication.csv')))
-        self.drug_has_contraindication =  self.process_headers(self.spark.read.option("header", True).csv(get_path('drug_has_contraindication.csv')))
-        self.drug_has_target = self.process_headers(self.spark.read.option("header", True).csv(get_path('drug_has_target.csv')))
+        self.drug_has_indication = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('drug_has_indication.csv')))
+        self.drug_has_contraindication = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('drug_has_contraindication.csv')))
+        self.drug_has_target = self.process_headers(
+            self.spark.read.option("header", True).csv(get_path('drug_has_target.csv')))
 
         self.gene_associated_with_disorder = self.process_headers(
             self.spark.read.option("header", True).csv(get_path('gene_associated_with_disorder.csv')))
@@ -342,18 +472,6 @@ class NeDRexAdapter:
             self.spark.read.option("header", True).csv(get_path('protein_similarity_protein.csv')))
 
 
-        # target_path = "data/ot_files/targets"
-        # self.target_df = self.spark.read.parquet(target_path)
-        #
-        # disease_path = "data/ot_files/diseases"
-        # self.disease_df = self.spark.read.parquet(disease_path)
-        #
-        # go_path = "data/ot_files/go"
-        # self.go_df = self.spark.read.parquet(go_path)
-        #
-        # mp_path = "data/ot_files/mousePhenotypes"
-        # self.mp_df = self.spark.read.parquet(mp_path)
-
         if stats:
             # print schema
             print(self.drugs.printSchema())
@@ -363,10 +481,6 @@ class NeDRexAdapter:
             print(self.signatures.printSchema())
             print(self.pathways.printSchema())
 
-            # print(self.target_df.printSchema())
-            # print(self.disease_df.printSchema())
-            # print(self.go_df.printSchema())
-            # print(self.mp_df.printSchema())
 
             # print number of rows
             print(
@@ -388,14 +502,6 @@ class NeDRexAdapter:
                 f"Length of evidence data: {self.pathways.count()} entries"
             )
 
-            # print number of rows per datasource
-            # self.evidence_df.groupBy("datasourceId").count().show(100)
-
-        # if show_edges:
-        #     for dataset in [field.value for field in self.datasets]:
-        #         self.evidence_df.where(
-        #             self.evidence_df.datasourceId == dataset
-        #         ).show(1, 50, True)
 
         if show_nodes:
             self.drugs.show(1, 50, True)
@@ -405,23 +511,6 @@ class NeDRexAdapter:
             self.pathways.show(1, 50, True)
             self.signatures.show(1, 50, True)
 
-            # self.disease_df.show(1, 50, True)
-            # self.go_df.show(1, 50, True)
-            # self.mp_df.show(1, 50, True)
-
-    def show_datasources(self):
-        """
-        Utility function to get all datasources in the evidence data.
-        """
-
-        # collect all distinct datasourceId values
-        datasources = (
-            self.evidence_df.select("datasourceId").distinct().collect()
-        )
-
-        # convert to list
-        self.datasources = [x.datasourceId for x in datasources]
-        print(self.datasources)
 
     def _yield_nodes(
             self,
@@ -459,7 +548,7 @@ class NeDRexAdapter:
             _props = {}
             _props["version"] = node_field_type.VERSION.value
             _props["source"] = node_field_type.SOURCE.value
-            _props["licence"] = _find_licence(node_field_type.SOURCE.value+"_node")
+            _props["licence"] = _find_licence(node_field_type.SOURCE.value + "_node")
 
             for field in self.node_fields:
 
@@ -483,17 +572,16 @@ class NeDRexAdapter:
         yield from self._yield_nodes(self.disorders, DiseaseNodeField)
 
         # Genes
-        # yield from self._yield_nodes(self.genes, GeneNodeField)
-        #
-        # # Proteins
-        # yield from self._yield_nodes(self.proteins, ProteinNodeField)
-        #
-        # # Pathways
-        # yield from self._yield_nodes(self.pathways, PathwayNodeField)
-        #
-        # # Signatures
-        # yield from self._yield_nodes(self.signatures, SignatureNodeField)
+        yield from self._yield_nodes(self.genes, GeneNodeField)
 
+        # # Proteins
+        yield from self._yield_nodes(self.proteins, ProteinNodeField)
+
+        # # Pathways
+        yield from self._yield_nodes(self.pathways, PathwayNodeField)
+
+        # # Signatures
+        yield from self._yield_nodes(self.signatures, SignatureNodeField, 'prosite')
 
     def get_edge_batches(self, df):
         """
@@ -502,7 +590,6 @@ class NeDRexAdapter:
         """
 
         logger.info("Generating batches.")
-
 
         # add partition number to self.evidence_df as column
         df = df.withColumn(
@@ -519,7 +606,7 @@ class NeDRexAdapter:
 
         logger.info(f"Generated {len(self.batches)} batches.")
 
-        return df,self.batches
+        return df, self.batches
 
     def get_edges(self):
         """
@@ -532,11 +619,20 @@ class NeDRexAdapter:
 
         dfs = [(self.drug_has_indication, DrugDiseaseIndicationEdgeField),
                (self.disorder_is_subtype_of_disorder, DiseaseDiseaseEdgeField),
-               (self.drug_has_contraindication, DrugDiseaseContraindicationEdgeField)
+               (self.drug_has_contraindication, DrugDiseaseContraindicationEdgeField),
+               (self.drug_has_target, DrugTargetEdgeField),
+               (self.gene_associated_with_disorder, GeneDiseaseAssociationEdgeField),
+               (self.is_isoform_of, ProteinIsIsoformOfProteinEdgeField),
+               (self.molecule_similarity_molecule, DrugSimilarityEdgeField),
+               (self.protein_encoded_by, ProteinEncodedByEdgeField),
+               (self.protein_has_signature, ProteinHasSignatureEdgeField),
+               (self.protein_in_pathway, ProteinIsInPathwayEdgeField),
+               (self.protein_interacts_with_protein, ProteinProteinInteractionEdgeField),
+               (self.protein_similarity_protein, ProteinProteinSimilarityEdgeField)
                ]
 
-        for df,edge_field_type in dfs:
-            df,batches = self.get_edge_batches(df)
+        for df, edge_field_type in dfs:
+            df, batches = self.get_edge_batches(df)
             for batch in batches:
                 yield from self._process_edges(
                     df.where(
@@ -544,7 +640,7 @@ class NeDRexAdapter:
                     ), edge_field_type
                 )
 
-    def _process_edges(self, batch, edge_field_type:Enum):
+    def _process_edges(self, batch, edge_field_type: Enum, source_type=None, target_type=None):
         """
         Process one batch of edges.
 
@@ -553,7 +649,7 @@ class NeDRexAdapter:
             batch: Spark DataFrame containing the edges of one batch.
         """
 
-        logger.info(f"Batch size: {batch.count()} edges.")
+        logger.info(f"Batch size: {batch.count()} edges for {edge_field_type}.")
 
         # yield edges per row of edge_df, skipping null values
         for row in tqdm(batch.collect()):
@@ -562,9 +658,9 @@ class NeDRexAdapter:
 
             properties["version"] = edge_field_type.VERSIONS.value
             properties["source"] = edge_field_type.SOURCES.value
-            properties['licence'] = [_find_licence(source+"_edge") for source in properties["source"]]
+            properties['licence'] = [_find_licence(source + "_edge") for source in properties["source"]]
 
-            for field in self.node_fields:
+            for field in self.edge_fields:
 
                 if not isinstance(field, edge_field_type):
                     continue
@@ -572,8 +668,8 @@ class NeDRexAdapter:
                 if row[field.value]:
                     properties[field.value] = row[field.value]
 
-            source_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_SOURCE_ID.value])
-            target_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_TARGET_ID.value])
+            source_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_SOURCE_ID.value], target_type)
+            target_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_TARGET_ID.value], source_type)
 
             yield (
                 0,
@@ -600,7 +696,8 @@ def _process_id_and_type(inputId: str, _type: Optional[str] = None):
     if not inputId:
         return (None, None)
     if _type:
-        _id = normalize_curie(f"{_type}:{inputId}")
+        id = inputId.split(".")[1]
+        _id = normalize_curie(f"{_type}:{id}")
 
         return (_id, _type)
 
