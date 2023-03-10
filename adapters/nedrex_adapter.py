@@ -567,11 +567,11 @@ class NeDRexAdapter:
 
         # Drugs
         yield from self._yield_nodes(self.drugs, DrugNodeField)
-
-        # Diseases
+        #
+        # # Diseases
         yield from self._yield_nodes(self.disorders, DiseaseNodeField)
-
-        # Genes
+        #
+        # # Genes
         yield from self._yield_nodes(self.genes, GeneNodeField)
 
         # # Proteins
@@ -617,7 +617,8 @@ class NeDRexAdapter:
 
         logger.info("Generating edges.")
 
-        dfs = [(self.drug_has_indication, DrugDiseaseIndicationEdgeField),
+        dfs = [
+            (self.drug_has_indication, DrugDiseaseIndicationEdgeField),
                (self.disorder_is_subtype_of_disorder, DiseaseDiseaseEdgeField),
                (self.drug_has_contraindication, DrugDiseaseContraindicationEdgeField),
                (self.drug_has_target, DrugTargetEdgeField),
@@ -670,8 +671,8 @@ class NeDRexAdapter:
                 if row[field.value]:
                     properties[field.value] = row[field.value]
 
-            source_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_SOURCE_ID.value], target_type)
-            target_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_TARGET_ID.value], source_type)
+            source_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_SOURCE_ID.value], source_type)
+            target_id, _ = _process_id_and_type(row[edge_field_type._PRIMARY_TARGET_ID.value], target_type)
 
             yield (
                 0,
