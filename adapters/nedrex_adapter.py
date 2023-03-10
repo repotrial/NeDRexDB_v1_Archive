@@ -631,13 +631,15 @@ class NeDRexAdapter:
                (self.protein_similarity_protein, ProteinProteinSimilarityEdgeField)
                ]
 
+        id_types = {ProteinHasSignatureEdgeField : (None,'prosite')}
+
         for df, edge_field_type in dfs:
             df, batches = self.get_edge_batches(df)
             for batch in batches:
                 yield from self._process_edges(
-                    df.where(
+                    batch=df.where(
                         df.partition_num == batch
-                    ), edge_field_type
+                    ), edge_field_type=edge_field_type, source_type=id_types.get(edge_field_type, (None,None))[0], target_type=id_types.get(edge_field_type,(None,None))[1]
                 )
 
     def _process_edges(self, batch, edge_field_type: Enum, source_type=None, target_type=None):

@@ -12,7 +12,7 @@ cd NeDRexDB_v1_Archive
 ## 🐳 Run Docker
 
 This repo also contains a `docker compose` workflow to create the NeDRexDB_v1 
-using BioCypher and load it into a dockerised Neo4j instance
+using BioCypher and load it into a dockerized Neo4j instance
 automatically. To run it, simply execute `docker compose up -d` (or `docker-compose up -d`) in the root 
 directory of the project. This will build and start up a single (detached) docker
 container with a Neo4j instance that contains the NeDRexDB_v1 knowledge graph built by
