@@ -20,3 +20,10 @@ BioCypher as the DB `nedrex`, which you can connect to and browse at
 localhost:7474 (don't forget to switch the DB to `nedrex` instead of the 
 standard `neo4j`). Authentication is set to `neo4j/neo4jpassword` by default
 and can be modified in the `docker-variables.env` file.
+
+## Alternative
+
+You can pull a prebuilt version of the NeDRex-Archive from dockerhub by using the `docker-compose.prebuilt.yml` docker-compose file as follows:
+```{bash}
+docker-compose -f docker-compose.prebuild.yml up -d
+```

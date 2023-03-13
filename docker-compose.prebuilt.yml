@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  neo4j:
+    image: docker.io/andimajore/nedrexdb_v1_archive_neo4j
+    container_name: nedrex_biocypher
+    env_file:
+      - docker-variables.env
+    ports:
+      - 7474:7474
+      - 7687:7687
+    volumes:
+      - nedrexv1_bc_data:/data
+ #   restart: always
+
+volumes:
+  nedrexv1_bc_data:
