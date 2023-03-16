@@ -1,10 +1,13 @@
 # add your settings here (overriding the defaults)
 
-offline: true
-srict_mode: true
+biocypher:
+  offline: true
+  srict_mode: true
+  output_directory: biocypher-out/nedrex
 
-neo4j_delimiter: "\t"
-neo4j_array_delimiter: "|"
-
-debug: false
-clear_cache: false
+neo4j:
+  database_name: nedrex
+  delimiter: '\t'
+  array_delimiter: '|'
+  wipe: true
+  import_call_file_prefix: import/nedrex/

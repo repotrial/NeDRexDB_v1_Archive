@@ -6,7 +6,7 @@ WORKDIR /usr/app/data/nedrex_files/
 RUN wget https://wolken.zbh.uni-hamburg.de/index.php/s/d6ScMNd2WHFeJtP/download/nedrex.zip --no-check-certificate && unzip nedrex.zip && rm nedrex.zip
 WORKDIR /usr/app/
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 RUN poetry config virtualenvs.create false && poetry install
 COPY . ./
 

@@ -2,7 +2,8 @@ version: '3.3'
 
 services:
   neo4j:
-    build: .
+    build:
+      context: .
     container_name: nedrex_biocypher
     env_file:
       - docker-variables.env

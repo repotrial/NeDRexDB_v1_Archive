@@ -135,14 +135,9 @@ def main():
     """
 
     # Start BioCypher
-    driver = biocypher.Driver(
-        db_name="nedrex",
-        offline=True,
-        wipe=True,
-        output_directory="biocypher-out/nedrex",
-        import_call_file_prefix="import/nedrex/",
-        user_schema_config_path="config/nedrex_schema_config.yaml",
-        skip_bad_relationships=True,  # allows import of incomplete test data
+    driver = biocypher.BioCypher(
+        schema_config_path="config/nedrex_schema_config.yaml",
+        biocypher_config_path="config/biocypher_config.yaml"
     )
 
     # Check the schema
