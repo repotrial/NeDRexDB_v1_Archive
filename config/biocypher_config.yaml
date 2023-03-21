@@ -2,7 +2,7 @@
 
 biocypher:
   offline: true
-  srict_mode: true
+  strict_mode: true
   output_directory: biocypher-out/nedrex
 
 neo4j:
@@ -11,3 +11,4 @@ neo4j:
   array_delimiter: '|'
   wipe: true
   import_call_file_prefix: import/nedrex/
+  quote_character: '"'
