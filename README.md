@@ -25,5 +25,5 @@ and can be modified in the `docker-variables.env` file.
 
 You can pull a prebuilt version of the NeDRex-Archive from dockerhub by using the `docker-compose.prebuilt.yml` docker-compose file as follows:
 ```{bash}
-docker-compose -f docker-compose.prebuild.yml up -d
+docker-compose -f docker-compose.prebuilt.yml up -d
 ```
