@@ -3,7 +3,7 @@ FROM andimajore/biocyper_base:python3.10 as setup-stage
 RUN apt install unzip
 
 WORKDIR /usr/app/data/nedrex_files/
-RUN wget https://wolken.zbh.uni-hamburg.de/index.php/s/d6ScMNd2WHFeJtP/download/nedrex.zip --no-check-certificate && unzip nedrex.zip && rm nedrex.zip
+RUN wget https://cloud.uni-hamburg.de/s/tPj5WpFFQ4PfR5F/download/nedrex.zip --no-check-certificate && unzip nedrex.zip && rm nedrex.zip
 WORKDIR /usr/app/
 
 COPY pyproject.toml ./
